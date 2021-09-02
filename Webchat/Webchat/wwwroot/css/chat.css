@@ -1,0 +1,125 @@
+﻿.chat-container { /*khung lớn*/
+    display: flex; /*flex box*/
+    height: calc(100vh - 220px); /*550px;độ cao khung, vh:chiều cao màng hình ,hàm tính */
+}
+
+.user-list-container,/*nội dung bên trái*/
+.chat-box-container{/*nội dung bên phải*/
+    flex: 0 0 auto;
+    border: 1px solid #808080;
+    
+}
+.user-list-container {
+    width: 30%; /*độ rộng*/
+    margin-right: 10px; /*background-color:#e1edec;Khoảng cách về bên phải*/
+    border-left: 10px none #808080;
+    
+}
+.chat-box-container {
+    width: 70%;
+    overflow:hidden;/*ẩn tràng*/
+    
+}
+
+
+.user-list-container > .user-item { /*(Cha)user-list-container>.(Con)user-item: tên người chat*/
+    padding: 10px; /*tạo khoảng cách giữa khung và nội dung*/
+    border-bottom: 1px dotted #ffffff; /*# để chọn màu*/
+}
+
+
+.user-list-container > .user-item:hover { /*:hover là trạng thái khi rê chuột vào user-item */
+     
+    cursor:pointer;/*background-color:#ddf1f1;hiện bàn tay khi rê chuột vào user-item*/
+    transform:scale(1.1);
+}
+
+
+/*CSS cho chấm tròn thể hiện trạng thái*/
+
+/*Mặc định là ofline*/
+.user-fullname::before { /* before tạo một thẻ ảo sau...*/
+    content: ''; /*Bắt buộc dùng khi dùng before*/
+    width:15px;
+    height:15px;
+    background-color:#808080;
+    display:inline-block;/*chỉnh kiểu*/
+    margin-right:5px;
+    border-radius:50%;/*tạo hình tròn*/
+    border:1.5px solid #ffffff;/*viền tròn trắng*/
+
+}
+ /*Trạng thái online*/
+.user-fullname.online::before {
+    background-color:green;
+    
+}
+
+/*CSS cho chat box*/
+.msg-box{
+    display:flex;
+    margin: 5px;
+}
+
+    .msg-box > .msg-content {
+        background-color: #ffffff;
+        padding: 8px;
+        border-radius: 8px;
+        max-width: 70%;
+        border: 1px solid #c7c7c7;
+        word-break: break-word; /*break-all: xuống dòng nếu tin quá dài(rớt dòng theo kí tự) break-word(rớt dòng theo từ)*/
+    }
+.msg-box > .msg-time {
+    display: flex;
+    align-items: center; /*căng chỉnh giữa nd chat phải có flex*/
+    margin-left: 5px;
+    font-size: 12px;
+    color: #696969;
+    opacity: 0; /*Độ trong suốt từ (0.0->1)*/
+    transition: opacity 0.3s; /*thời gian hiển thị tg chậm 0.3s*/
+}
+    /*Hiên khi rê chuột vào*/
+    .msg-box:hover >.msg-time{
+        opacity: 1;
+    }
+    /*Chỉnh sửa tin nhăn cho bản thân*/
+    .msg-box.me{
+        flex-direction:row-reverse; /* đảo ngược vị trí lại các thẻ chuyển về phải*/
+    }
+
+    .msg-box.me> .msg-content{
+         background-color: #9cc9c4;
+         border: 1px solid #8913c3;
+         color:white;
+    }
+
+    .msg-box.me >.msg-time{
+        margin-right:5px;
+    }
+.input-msg-container {
+    padding: 5px;
+    background-color: azure;
+    
+}
+#input-msg {
+    outline: none; /*mất viền đen khung chat*/
+    resize: none; /*không cho tự thay đổi khung chat*/
+    width: 100%;
+    border: 1px solid #7aa1aa;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+        #input-msg:focus{/*khi gê chuột vào nền khung chát đổi màu đậm*/
+            border:1.2px solid #807ee8;
+        }
+.msg-box-container {
+    height: calc(100% - 63px);
+    overflow: auto;/*xuất hiện con lăn*/
+}
+    .selected {
+    background-color: #7aa1aa;
+    color:aliceblue;
+}
+    .user-item.selected:hover{
+    background-color:#7aa1aa;
+}

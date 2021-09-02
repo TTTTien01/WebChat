@@ -1,0 +1,48 @@
+﻿@model Webchat.ViewModels.AddUser.AddAppUser
+
+@{
+    ViewData["Title"] = "SignUp";
+}
+
+<h1>Đăng kí tài khoản</h1>
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="SignUp" method="post" autocomplete="off">  @* note: themmethos = "post"*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if(TempData["Mesg"]!=null)
+            {
+                <span class="text-danger">@TempData["Mesg"]</span>
+            }    
+           <div class="form-group">
+                <label asp-for="UserName" class="control-label">Tên đăng nhập</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>@*hiện lỗi khi có lỗi*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Mật khẩu</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label">Nhập lại mật khẩu</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label">Tên đầy đủ </label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dang ki" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
