@@ -35,7 +35,14 @@ namespace Webchat.Entities
         public string FullName { get; set; }
 
         public DateTime? CreateDate { get; set; }// Allow? co the null trong database
+		public virtual ICollection<AppMessage> SendMessage { get; set; }
+		public virtual ICollection<AppMessage> RecivedMessage { get; set; }
 
+		public AppUser()
+		{
+			SendMessage = new HashSet<AppMessage>();
+			RecivedMessage = new HashSet<AppMessage>();
+		}
 
-    }
+	}
 }
