@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Webchat.Common;
 using Webchat.Entities;
 
 namespace Webchat.Hubs
@@ -31,7 +32,7 @@ namespace Webchat.Hubs
 			//Lưu tin nhắn vào database
 			AppMessage mesg = new AppMessage
 			{
-				Message = message,
+				Message = AESThenHMAC.SimpleEncryptWithPassword(message, AppConfig.MESG_KEY),
 				SendAt = DateTime.Now,
 				ReciverId = Convert.ToInt32(targetUserId),
 				SenderId = Convert.ToInt32(currentUserId)
