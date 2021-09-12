@@ -15,26 +15,40 @@ $(".user-item").click(function (ev) {
     //lưu lại id của user đc chọn
 	pageData.selectedUserId = $(ev.currentTarget).attr("data-user-id");
 
-	//Tái tạo lại đoạn tin nhắn cũ theo user đc chọn
-	var conversation = pageData.conversation[pageData.selectedUserId] ?? [];//lấy đc userid đc chọn, ?? : kiểm tra khác null
-	var container = $(".msg-box-container");
-	//xóa tin nhắn hiện có trên màng hình
-	container.empty();
-	for (var i = 0; i < conversation.length; i++)
-	{
-		var mesgData = conversation[i];
-		var template = `<div class="msg-box">
-					<div class="msg-content">${mesgData.mesg}</div>
-					<div class="msg-time">${mesgData.datetime}</div>
-				</div>`;
-		var element = $(template);
-		container.append(element);
-		if (pageData.currentUserId == mesgData.sender) {
-			element.addClass("me");
+	function renderMesg() {
+		//Tái tạo lại đoạn tin nhắn cũ theo user đc chọn
+		var conversation = pageData.conversation[pageData.selectedUserId] ?? [];//lấy đc userid đc chọn, ?? : kiểm tra khác null
+		var container = $(".msg-box-container");
+		//xóa tin nhắn hiện có trên màng hình
+		container.empty();
+		for (var i = 0; i < conversation.length; i++) {
+			var mesgData = conversation[i];
+			var template = `<div class="msg-box">
+							<div class="msg-content">${mesgData.mesg}</div>
+							<div class="msg-time">${mesgData.datetime}</div>
+						</div>`;
+			var element = $(template);
+			container.append(element);
+			if (pageData.currentUserId == mesgData.sender) {
+				element.addClass("me");
+			}
+			// Lăn xuống cuối
+			container.scrollTop(container[0].scrollHeight);
 		}
-		// Lăn xuống cuối
-		container.scrollTop(container[0].scrollHeight);
 	}
+	if (pageData.conversation[pageData.selectedUserId] == null)
+	{ 
+		//tìm lại tin nhắn cũ
+		var url = "/load-tn/" + pageData.selectedUserId;
+		$.getJSON(url, null, function (response) {
+			//Đảo ngược trật tự hiển thị
+			response.reverse();			
+			//lưu lại tin nhắn cũ vào pageData
+			pageData.conversation[pageData.selectedUserId] = response;
+			renderMesg();//
+		});
+	}
+	renderMesg();//
 });
 
 
